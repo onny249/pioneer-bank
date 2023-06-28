@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+   <title>Shopping Cart</title>
+   <meta charset="utf-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1">
+   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.css" rel="stylesheet" />
+   <link href="style.css" rel="stylesheet">
+</head>
+
+<body>
+
+   <section>
+      <div class="container">
+         <div class="cart">
+            <div class="col-md-12 col-lg-10 mx-auto">
+               <div class="cart-item">
+                  <div class="row">
+                     <div class="col-md-7 center-item">
+                        <img src="images/product-1.png" alt="">
+                        <h5>iPhone 11 128GB Black</h5>
+                     </div>
+
+                     <div class="col-md-5 center-item">
+                        <div class="input-group number-spinner">
+                           <button id="minus" onclick="handlerProductChange('phone',false)" class="btn btn-default"><i class="fas fa-minus"></i></button>
+                           <input id="phone-count" type="text" class="form-control text-center" value="1">
+                           <button id="1st-plus" onclick="handlerProductChange('phone',true)" class="btn btn-default"><i class="fas fa-plus"></i></button>
+                        </div>
+                        <h5>$<span id="phone-total">1219</span></h5>
+                        <img src="images/remove.png" alt="" class="remove-item">
+                     </div>
+                  </div>
+               </div>
+
+               <div class="cart-item">
+                  <div class="row">
+                     <div class="col-md-7 center-item mx-auto">
+                        <img src="images/product-2.png" alt="">
+                        <h5>iPhone 11 Silicone Case - Black</h5>
+                     </div>
+                     <div class="col-md-5 center-item">
+                        <div class="input-group number-spinner">
+                           <button id="2nd-minus" onclick="handlerProductChange('case',false)" class="btn btn-default"><i class="fas fa-minus"></i></button>
+                           <input id="case-count" type="text" class="form-control text-center" value="1">
+                           <button id="2nd-plus" onclick="handlerProductChange('case',true)" class="btn btn-default"><i class="fas fa-plus"></i></button>
+
+                        </div>
+                        <h5>$<span id="case-total">59</span></h5>
+                        <img src="images/remove.png" alt="" class="remove-item">
+                     </div>
+                  </div>
+               </div>
+
+               <div class="cart-item">
+                  <div class="row">
+
+                     <div class="col-md-8">
+                        <h5>Subtotal: </h5>
+                        <h5>Tax:</h5>
+                        <h5>Total:</h5>
+                     </div>
+
+                     <div class="col-md-4 status">
+                        <h5>$<span id="total-amount">1278</span></h5>
+                        <h5>$<span id="tax">0</span></h5>
+                        <h5>$<span id="totalCost">1,278</span></h5>
+                     </div>
+                  </div>
+               </div>
+               <div class="col-md-12 pt-4 pb-4">
+                  <button type="button" class="btn btn-success check-out">Check Out</button>
+               </div>
+            </div>
+         </div>
+      </div>
+   </section>
+
+   <script>
+
+        function handlerProductChange(product, isIncrease) {
+         const productCount = document.getElementById(product+'-count').value;
+         const productNum = parseInt(productCount);
+         // const finalNum = convertNum - 1;
+         let inputValue = productNum;
+         if(isIncrease == true){
+               inputValue = productNum+1;
+         }
+         if(isIncrease == false && productNum > 0){
+            inputValue = productNum  - 1;
+         }
+         document.getElementById(product+'-count').value = inputValue;
+         // const productCost = inputValue * 1219;
+         let productCost = 0;
+         if(product == 'phone'){
+            productCost = inputValue * 1219;
+         }
+         if (product == 'case') {
+         productCost = inputValue * 59;
+        }
+         document.getElementById(product+'-total').innerText =  productCost;
+         calculateTotal();
+      }
+
+      function calculateTotal(){
+
+         const phoneCount = getInputValue('phone');
+         const caseCount =  getInputValue('case');
+         // const phoneInput = document.getElementById('phone-count').value;
+         // const phoneCount = parseInt(phoneInput);
+         
+         // const caseInput = document.getElementById('case-count').value;
+         // const caseCount = parseInt(caseInput);
+
+         const IphoneCost = phoneCount*1219;
+         const caseCost = caseCount*59;
+
+         const totalProductValue = IphoneCost+caseCost;
+         document.getElementById('total-amount').innerText = totalProductValue;
+         
+         const taxOfProduct = totalProductValue * 0.02;
+         const taxNumber = parseInt(taxOfProduct);
+         document.getElementById('tax').innerText = taxNumber;
+
+         const totalProductCost = totalProductValue + taxNumber;
+         document.getElementById('totalCost').innerText = totalProductCost;
+
+
+      }
+      
+      function getInputValue(product){
+         const productInput = document.getElementById(product+ '-count').value;
+         const productCount = parseInt(productInput);
+         return productCount
+      }
+      
+//       document.getElementById('1st-plus').addEventListener('click', function () { 
+//          handlerProductChange(true);
+//       });
+//       document.getElementById('minus').addEventListener('click', function () {
+//          handlerProductChange(false);
+//       });
+
+      // function handlerProductChange(isIncrease) {
+      //    const minusCount = document.getElementById('phone-count').value;
+      //    const productNum  = parseInt(minusCount);
+      //    // const finalNum = convertNum - 1;
+      //    let inputValue = convertNum;
+      //    if(isIncrease == true){
+      //          inputValue = convertNum+1;
+      //    }
+      //    if(isIncrease == false && convertNum > 0){
+      //       inputValue = convertNum - 1;
+      //    }
+      //    document.getElementById('phone-count').value = inputValue;
+      //    const minimumCost = inputValue * 1219;
+      //    document.getElementById('totalValue').innerText = minimumCost;
+         
+      // }
+      
+//       // document.getElementById('2nd-plus').addEventListener('click', function () {
+//       //    productValueChange(true);
+//       // })
+//       // document.getElementById('2nd-minus').addEventListener('click', function () {
+//       //    productValueChange(false);
+//       // })
+
+//       function productValueChange(isDecrease){
+//          const sndPlusCount = document.getElementById('case-Count').value;
+//          const sndPlusCountNumber = parseInt(sndPlusCount);
+//          let inputValue = sndPlusCountNumber;
+//          if(isDecrease == true){
+//                inputValue = sndPlusCountNumber+1;
+//          }
+
+//          if(isDecrease == false && inputValue>0){
+//             inputValue = sndPlusCountNumber-1;
+//          }
+
+//          document.getElementById('case-Count').value = inputValue;
+//          const cost = inputValue * 59;
+//          document.getElementById('SiliconeCaseCost').innerText = cost;
+//       }
+   
+// // এইকোড গুলো ঠিক আছে। কিন্তু আমরা function USE KORE KORBO. CODE TA KE ARO EKTU MODIFY KORAR JONNO.
+      //    document.getElementById('1st-plus').addEventListener('click', function () {
+      //    const plusCount = document.getElementById('phone-count').value;
+      //    const totalCount = parseInt(plusCount);
+      //    const finalCount = totalCount + 1;
+      //    document.getElementById('phone-count').value = finalCount;
+      //    const phoneCost = finalCount * 1219;
+      //    document.getElementById('totalValue').innerText = phoneCost;
+
+      // })
+
+   
+
+      // const minusCounting = document.getElementById('minus');
+      // minusCounting.addEventListener('click', function () {
+      //    const minusCount = document.getElementById('phone-count').value;
+      //    const convertNum = parseInt(minusCount);
+      //    const finalNum = convertNum - 1;
+      //    document.getElementById('phone-count').value = finalNum;
+      //    const minimumCost = finalNum * 1219;
+      //    document.getElementById('totalValue').innerText = minimumCost;
+      // })
+
+ 
+      // const nextCount = document.getElementById('2nd-plus');
+      // nextCount.addEventListener('click', function () {
+      //    const sndPlusCount = document.getElementById('valueCount').value;
+      //    const sndPlusCountNumber = parseInt(sndPlusCount);
+      //    const CountingNum = sndPlusCountNumber + 1;
+      //    document.getElementById('valueCount').value = CountingNum;
+      //    const cost = CountingNum * 59;
+      //    document.getElementById('SiliconeCaseCost').innerText = cost;
+
+
+      // })
+
+      // const sndMinusCount = document.getElementById('2nd-minus');
+      // sndMinusCount.addEventListener('click', function () {
+      //    const getValue = document.getElementById('valueCount').value;
+      //    const getValueNumber = parseInt(getValue);
+      //    const nowFinalNum = getValueNumber - 1;
+      //    document.getElementById('valueCount').value = nowFinalNum;
+      //    const MinusCost = nowFinalNum * 59;
+      //    document.getElementById('SiliconeCaseCost').innerText = MinusCost;
+      // })
+
+   </script>
+</body>
+
+</html>
